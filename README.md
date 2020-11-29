@@ -17,6 +17,9 @@ helm repo add jijeesh https://jijeesh.github.io/helm-chart/
 helm repo update
 
 # Test the Helm chart repository
+helm search repo nginx
 
+# Add new charts to an existing repository
+helm repo index --url https://jijeesh.github.io/helm-chart/ --merge index.yaml .
 
 
