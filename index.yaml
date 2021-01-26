@@ -1,9 +1,79 @@
 apiVersion: v1
 entries:
+  cert-manager:
+  - apiVersion: v1
+    appVersion: v1.1.0
+    created: "2021-01-26T11:06:47.139680213+05:30"
+    description: A Helm chart for cert-manager
+    digest: 48829f0ac7f8718893cd66038e1a3a442a69871a397fe1404e6a7a6d141eec51
+    home: https://github.com/jetstack/cert-manager
+    icon: https://raw.githubusercontent.com/jetstack/cert-manager/master/logo/logo.png
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: james@jetstack.io
+      name: munnerz
+    name: cert-manager
+    sources:
+    - https://github.com/jetstack/cert-manager
+    urls:
+    - https://jijeesh.github.io/helm-chart/cert-manager-v1.1.0.tgz
+    version: v1.1.0
+  cert-utils-operator:
+  - apiVersion: v1
+    appVersion: v0.2.2
+    created: "2021-01-26T11:06:47.139915614+05:30"
+    description: Helm chart that deploys cert-utils-operator
+    digest: c79d4b3480518547a527068962153bcdda96e1da8e11c4f8a534b40a0e4437f0
+    keywords:
+    - certificates
+    - operator
+    name: cert-utils-operator
+    sources:
+    - https://github.com/redhat-cop/cert-utils-operator
+    urls:
+    - https://jijeesh.github.io/helm-chart/cert-utils-operator-v0.2.2.tgz
+    version: v0.2.2
+  compute:
+  - apiVersion: v2
+    appVersion: "1.5"
+    created: "2021-01-26T11:06:47.140494617+05:30"
+    description: A Helm chart for Kubernetes
+    digest: e8a16604b3358168783434e13c4cdd39de3aa08863f4aa620e987652221467cf
+    name: compute
+    type: application
+    urls:
+    - https://jijeesh.github.io/helm-chart/compute-0.1.0.tgz
+    version: 0.1.0
+  grafana:
+  - apiVersion: v1
+    appVersion: 7.2.0
+    created: "2021-01-26T11:06:47.141970426+05:30"
+    description: The leading tool for querying and visualizing time series and metrics.
+    digest: 27ee0c7f272e82a325cf674eeafd36f373fda7fe2c7cb5f4b29c7033dbcc8bbc
+    home: https://grafana.net
+    icon: https://raw.githubusercontent.com/grafana/grafana/master/public/img/logo_transparent_400x.png
+    kubeVersion: ^1.8.0-0
+    maintainers:
+    - email: zanhsieh@gmail.com
+      name: zanhsieh
+    - email: rluckie@cisco.com
+      name: rtluckie
+    - email: maor.friedman@redhat.com
+      name: maorfr
+    name: grafana
+    sources:
+    - https://github.com/grafana/grafana
+    urls:
+    - https://jijeesh.github.io/helm-chart/grafana-5.6.12.tgz
+    version: 5.6.12
   knife:
   - apiVersion: v2
     appVersion: latest
-    created: "2020-11-30T20:41:54.797775099+05:30"
+    created: "2021-01-26T11:06:47.143589236+05:30"
     description: A Helm chart for Kubernetes
     digest: 2ee660616a57148d3676235dd99b44fef70dca4774cd85e8c36e5d356cf10194
     name: knife
@@ -11,10 +81,77 @@ entries:
     urls:
     - https://jijeesh.github.io/helm-chart/charts/knife-0.1.0.tgz
     version: 0.1.0
+  kube-prometheus-stack:
+  - annotations:
+      artifacthub.io/links: |
+        - name: Chart Source
+          url: https://github.com/prometheus-community/helm-charts
+        - name: Upstream Project
+          url: https://github.com/prometheus-operator/kube-prometheus
+      artifacthub.io/operator: "true"
+    apiVersion: v1
+    appVersion: 0.38.1
+    created: "2021-01-26T11:06:47.16244205+05:30"
+    dependencies:
+    - condition: kubeStateMetrics.enabled
+      name: kube-state-metrics
+      repository: https://kubernetes-charts.storage.googleapis.com/
+      version: 2.8.*
+    - condition: nodeExporter.enabled
+      name: prometheus-node-exporter
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 1.11.*
+    - condition: grafana.enabled
+      name: grafana
+      repository: https://grafana.github.io/helm-charts
+      version: 5.6.*
+    description: kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
+    digest: 849615570c1793293c95c9802c7a7087e6d5c9f972ed9d1996dfb2ad025d42e5
+    home: https://github.com/prometheus-operator/kube-prometheus
+    icon: https://raw.githubusercontent.com/prometheus/prometheus.github.io/master/assets/prometheus_logo-cb55bb5c346.png
+    keywords:
+    - operator
+    - prometheus
+    - kube-prometheus
+    maintainers:
+    - name: vsliouniaev
+    - name: bismarck
+    - email: gianrubio@gmail.com
+      name: gianrubio
+    - email: github.gkarthiks@gmail.com
+      name: gkarthiks
+    - email: scott@r6by.com
+      name: scottrigby
+    - email: miroslav.hadzhiev@gmail.com
+      name: Xtigyro
+    name: kube-prometheus-stack
+    sources:
+    - https://github.com/prometheus-community/helm-charts
+    - https://github.com/prometheus-operator/kube-prometheus
+    urls:
+    - https://jijeesh.github.io/helm-chart/charts/kube-prometheus-stack-9.4.9.tgz
+    version: 9.4.9
+  mongodb-enterprise-operator:
+  - apiVersion: v1
+    created: "2021-01-26T11:06:47.142460329+05:30"
+    description: MongoDB Kubernetes Enterprise Operator
+    digest: 84c2a4c5fbda5de36dbe281cbeea7b2034b59f3f299dd07d6306cbd6bc832bc8
+    home: https://github.com/mongodb/mongodb-enterprise-kubernetes
+    keywords:
+    - mongodb
+    - database
+    - nosql
+    kubeVersion: '>=1.13-0'
+    maintainers:
+    - name: Cloud Team
+    name: mongodb-enterprise-operator
+    urls:
+    - https://jijeesh.github.io/helm-chart/mongodb-enterprise-operator-1.9.1.tgz
+    version: 1.9.1
   nginx:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2020-11-30T20:41:54.798677402+05:30"
+    created: "2021-01-26T11:06:47.163299755+05:30"
     description: A Helm chart for Kubernetes
     digest: 4305250b0346538226e6ef3e472e206b6941ced6d809f350fc15d8f40d67883c
     name: nginx
@@ -22,4 +159,4 @@ entries:
     urls:
     - https://jijeesh.github.io/helm-chart/charts/nginx-0.1.0.tgz
     version: 0.1.0
-generated: "2020-11-30T20:41:54.796838596+05:30"
+generated: "2021-01-26T11:06:47.130788659+05:30"

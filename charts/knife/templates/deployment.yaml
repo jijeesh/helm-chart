@@ -16,7 +16,8 @@ spec:
     {{- with .Values.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
-    {{- end }}
+        rollme: {{ randAlphaNum 5 | quote }}
+    {{- end }}        
       labels:
         {{- include "knife.selectorLabels" . | nindent 8 }}
     spec:

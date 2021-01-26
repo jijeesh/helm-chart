@@ -1,0 +1,16 @@
+apiVersion: v1
+data:
+  datasource.yaml: |-
+    apiVersion: 1
+    datasources:
+    - name: linkerd2
+      type: prometheus
+      url: http://prometheus-kube-prometheus-prometheus:9090/
+      access: proxy
+      isDefault: false
+kind: ConfigMap
+metadata:
+  labels:
+    grafana_datasource: "1"
+  name: linkerd-prometheus-grafana-datasource
+  namespace: monitoring

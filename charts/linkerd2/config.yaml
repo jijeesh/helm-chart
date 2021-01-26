@@ -1,0 +1,4 @@
+global:
+  prometheusUrl: prometheus-kube-prometheus-prometheus.monitoring.svc.local:9090
+prometheus:
+  enabled: false

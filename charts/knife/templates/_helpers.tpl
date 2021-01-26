@@ -47,6 +47,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Selector labels
 */}}
 {{- define "knife.selectorLabels" -}}
+app: {{ include "knife.name" . }}
 app.kubernetes.io/name: {{ include "knife.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}

@@ -1,0 +1,20 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "knife.fullname" . }}
+  labels:
+{{- include "knife.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: post-install,post-upgrade,pre-delete
+    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+    helm.sh/hook-weight: "-10"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: ""
+subjects:
+- kind: ServiceAccount
+  name: {{ include "knife.serviceAccountName" . }}
+  namespace: {{ .Release.Namespace }}

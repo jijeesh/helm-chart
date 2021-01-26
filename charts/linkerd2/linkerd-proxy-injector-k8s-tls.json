@@ -1,0 +1,2 @@
+NAME                             TYPE                DATA   AGE
+linkerd-proxy-injector-k8s-tls   kubernetes.io/tls   2      84m
