@@ -1,0 +1,32 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: mongodump
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          volumes:
+          - name: mongodump
+            persistentVolumeClaim:
+              claimName: mongodump
+          restartPolicy: Never
+          containers:
+            - name: mongodb
+              image: mongo
+              command : ["/bin/sh", "-c"]
+              args: ["mongodump --uri \"mongodb://$(MONGODB_HOST)/?replicaSet=rs0\" -u $(MONGODB_USERNAME) -p $(MONGODB_PASSWORD) --authenticationDatabase $(MONGODB_DB) -o /usr/share/mongodump/$(date +\"%d%m%H\")"]
+              env:
+              - name: MONGODB_DB
+                value: mydb
+              - name: MONGODB_HOST
+                value: mongodb-release-0.mongodb-release-headless.mongodb,mongodb-release-1.mongodb-release-headless.mongodb
+              - name: MONGODB_PASSWORD
+                value: jijeesh
+              - name: MONGODB_USERNAME
+                value: admin
+              volumeMounts:
+              - mountPath: "/usr/share/mongodump/"
+                name: mongodump
