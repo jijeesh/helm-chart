@@ -3,7 +3,7 @@ entries:
   cert-manager:
   - apiVersion: v1
     appVersion: v1.1.0
-    created: "2021-01-28T16:39:16.917503282+05:30"
+    created: "2021-01-28T20:10:01.316077687+05:30"
     description: A Helm chart for cert-manager
     digest: 48829f0ac7f8718893cd66038e1a3a442a69871a397fe1404e6a7a6d141eec51
     home: https://github.com/jetstack/cert-manager
@@ -25,7 +25,7 @@ entries:
   cert-utils-operator:
   - apiVersion: v1
     appVersion: v0.2.2
-    created: "2021-01-28T16:39:16.917715381+05:30"
+    created: "2021-01-28T20:10:01.316305588+05:30"
     description: Helm chart that deploys cert-utils-operator
     digest: c79d4b3480518547a527068962153bcdda96e1da8e11c4f8a534b40a0e4437f0
     keywords:
@@ -40,7 +40,7 @@ entries:
   compute:
   - apiVersion: v2
     appVersion: "1.5"
-    created: "2021-01-28T16:39:16.919032474+05:30"
+    created: "2021-01-28T20:10:01.317523696+05:30"
     description: A Helm chart for Kubernetes
     digest: e8a16604b3358168783434e13c4cdd39de3aa08863f4aa620e987652221467cf
     name: compute
@@ -51,7 +51,7 @@ entries:
   grafana:
   - apiVersion: v1
     appVersion: 7.2.0
-    created: "2021-01-28T16:39:16.921045762+05:30"
+    created: "2021-01-28T20:10:01.319665809+05:30"
     description: The leading tool for querying and visualizing time series and metrics.
     digest: 27ee0c7f272e82a325cf674eeafd36f373fda7fe2c7cb5f4b29c7033dbcc8bbc
     home: https://grafana.net
@@ -73,7 +73,17 @@ entries:
   knife:
   - apiVersion: v2
     appVersion: latest
-    created: "2021-01-28T16:39:16.926208732+05:30"
+    created: "2021-01-28T20:10:01.320068312+05:30"
+    description: A Helm chart for Kubernetes
+    digest: 6a06085e2641e22eeeb926fd58ecc3ed558a1401bd90145c8328af793de8d3c3
+    name: knife
+    type: application
+    urls:
+    - https://jijeesh.github.io/helm-chart/knife-1.0.0.tgz
+    version: 1.0.0
+  - apiVersion: v2
+    appVersion: latest
+    created: "2021-01-28T20:10:01.32458364+05:30"
     description: A Helm chart for Kubernetes
     digest: 2ee660616a57148d3676235dd99b44fef70dca4774cd85e8c36e5d356cf10194
     name: knife
@@ -91,7 +101,7 @@ entries:
       artifacthub.io/operator: "true"
     apiVersion: v1
     appVersion: 0.38.1
-    created: "2021-01-28T16:39:16.946455916+05:30"
+    created: "2021-01-28T20:10:01.341109744+05:30"
     dependencies:
     - condition: kubeStateMetrics.enabled
       name: kube-state-metrics
@@ -136,7 +146,7 @@ entries:
       category: Database
     apiVersion: v2
     appVersion: 4.4.3
-    created: "2021-01-28T16:39:16.924177144+05:30"
+    created: "2021-01-28T20:10:01.32297863+05:30"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -166,7 +176,7 @@ entries:
     version: 10.5.1
   mongodb-enterprise-operator:
   - apiVersion: v1
-    created: "2021-01-28T16:39:16.924742441+05:30"
+    created: "2021-01-28T20:10:01.323556434+05:30"
     description: MongoDB Kubernetes Enterprise Operator
     digest: 84c2a4c5fbda5de36dbe281cbeea7b2034b59f3f299dd07d6306cbd6bc832bc8
     home: https://github.com/mongodb/mongodb-enterprise-kubernetes
@@ -184,7 +194,7 @@ entries:
   nginx:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-01-28T16:39:16.946839714+05:30"
+    created: "2021-01-28T20:10:01.341539946+05:30"
     description: A Helm chart for Kubernetes
     digest: 4305250b0346538226e6ef3e472e206b6941ced6d809f350fc15d8f40d67883c
     name: nginx
@@ -195,7 +205,7 @@ entries:
   oauth2-proxy:
   - apiVersion: v1
     appVersion: 6.1.1
-    created: "2021-01-28T16:39:16.925587636+05:30"
+    created: "2021-01-28T20:10:01.324217538+05:30"
     deprecated: true
     description: DEPRECATED - A reverse proxy that provides authentication with Google, Github or other providers
     digest: 89a58c38383bbfb8efb0d01bf3a3a9399e71150031ac738e8e51c865ec24d104
@@ -214,4 +224,4 @@ entries:
     urls:
     - https://jijeesh.github.io/helm-chart/oauth2-proxy-6.1.1.tgz
     version: 6.1.1
-generated: "2021-01-28T16:39:16.908021537+05:30"
+generated: "2021-01-28T20:10:01.30706213+05:30"
