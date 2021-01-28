@@ -10,11 +10,11 @@ spec:
   pollingInterval: 15
   cooldownPeriod:  30
   minReplicaCount: 1
-  maxReplicaCount: 10
+  maxReplicaCount: 12
   triggers:
   - type: prometheus
     metadata:
       serverAddress: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
-      metricName: access_frequency
+      metricName: http_requests_total
       threshold: '3'
-      query: sum(rate(request_total[2m]))
+      query: sum(rate(request_total{deployment="nginx"}[30s]))
