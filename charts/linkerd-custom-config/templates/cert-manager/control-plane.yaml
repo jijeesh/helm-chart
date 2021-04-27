@@ -14,8 +14,8 @@ metadata:
   namespace: linkerd
 spec:
   secretName: linkerd-identity-issuer
-  duration: 48h
-  renewBefore: 25h
+  duration: {{.Values.certificate.controlPlane.duration}}
+  renewBefore: {{.Values.certificate.controlPlane.renewBefore}}
   issuerRef:
     name: linkerd-trust-anchor
     kind: Issuer

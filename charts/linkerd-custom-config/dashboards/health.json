@@ -40,7 +40,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus",
+      "datasource": "$datasource",
       "fill": 0,
       "gridPos": {
         "h": 7,
@@ -73,14 +73,14 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "process_virtual_memory_bytes{control_plane_ns=\"$namespace\", job=\"linkerd-proxy\"}",
+          "expr": "process_virtual_memory_bytes{job=\"linkerd-proxy\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{namespace}}/{{pod}}/virtual",
           "refId": "A"
         },
         {
-          "expr": "process_resident_memory_bytes{control_plane_ns=\"$namespace\", job=\"linkerd-proxy\"}",
+          "expr": "process_resident_memory_bytes{job=\"linkerd-proxy\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{namespace}}/{{pod}}/resident",
@@ -133,7 +133,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus",
+      "datasource": "$datasource",
       "fill": 0,
       "gridPos": {
         "h": 7,
@@ -166,7 +166,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(irate(process_cpu_seconds_total{control_plane_ns=\"$namespace\", job=\"linkerd-proxy\"}[20s])) by (namespace, pod)",
+          "expr": "sum(irate(process_cpu_seconds_total{job=\"linkerd-proxy\"}[20s])) by (namespace, pod)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{namespace}}/{{pod}}",
@@ -219,7 +219,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus",
+      "datasource": "$datasource",
       "fill": 0,
       "gridPos": {
         "h": 7,
@@ -252,7 +252,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "process_open_fds{control_plane_ns=\"$namespace\", job=\"linkerd-proxy\"}",
+          "expr": "process_open_fds{job=\"linkerd-proxy\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{namespace}}/{{pod}}",
@@ -321,7 +321,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus",
+      "datasource": "$datasource",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -359,7 +359,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(irate(response_total{classification=\"success\", deployment!=\"\", namespace=\"$namespace\", direction=\"inbound\"}[30s])) by (pod) / sum(irate(response_total{deployment!=\"\", namespace=\"$namespace\", direction=\"inbound\"}[30s])) by (pod)",
+          "expr": "sum(irate(response_total{classification=\"success\", deployment!=\"\", namespace=~\"$namespace|$namespace-viz\", direction=\"inbound\"}[30s])) by (pod) / sum(irate(response_total{deployment!=\"\", namespace=~\"$namespace|$namespace-viz\", direction=\"inbound\"}[30s])) by (pod)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "po/{{pod}}",
@@ -412,7 +412,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus",
+      "datasource": "$datasource",
       "fill": 0,
       "gridPos": {
         "h": 7,
@@ -450,7 +450,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(irate(request_total{deployment!=\"\", namespace=\"$namespace\", direction=\"inbound\"}[30s])) by (pod)",
+          "expr": "sum(irate(request_total{deployment!=\"\", namespace=~\"$namespace|$namespace-viz\", direction=\"inbound\"}[30s])) by (pod)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "po/{{pod}}",
@@ -503,7 +503,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus",
+      "datasource": "$datasource",
       "description": "",
       "fill": 1,
       "gridPos": {
@@ -542,7 +542,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "histogram_quantile(0.95, sum(rate(response_latency_ms_bucket{deployment!=\"\", namespace=\"$namespace\", direction=\"inbound\"}[30s])) by (le, pod))",
+          "expr": "histogram_quantile(0.95, sum(rate(response_latency_ms_bucket{deployment!=\"\", namespace=~\"$namespace|$namespace-viz\", direction=\"inbound\"}[30s])) by (le, pod))",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "po/{{pod}}",
@@ -643,7 +643,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "prometheus",
+          "datasource": "$datasource",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -681,7 +681,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "tcp_close_total{deployment=\"$deployment\", namespace=\"$namespace\", direction=\"inbound\",errno!=\"\"}",
+              "expr": "tcp_close_total{deployment=\"$deployment\", namespace=~\"$namespace|$namespace-viz\", direction=\"inbound\",errno!=\"\"}",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "{{peer}} {{errno}}",
@@ -734,7 +734,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "prometheus",
+          "datasource": "$datasource",
           "fill": 0,
           "gridPos": {
             "h": 7,
@@ -772,7 +772,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "tcp_open_connections{deployment=\"$deployment\", namespace=\"$namespace\", direction=\"inbound\"}",
+              "expr": "tcp_open_connections{deployment=\"$deployment\", namespace=~\"$namespace|$namespace-viz\", direction=\"inbound\"}",
               "format": "time_series",
               "intervalFactor": 1,
               "legendFormat": "{{peer}}",
@@ -833,7 +833,7 @@
             "mode": "spectrum"
           },
           "dataFormat": "timeseries",
-          "datasource": "prometheus",
+          "datasource": "$datasource",
           "gridPos": {
             "h": 7,
             "w": 8,
@@ -857,7 +857,7 @@
           },
           "targets": [
             {
-              "expr": "tcp_connection_duration_ms_bucket{deployment=\"$deployment\", namespace=\"$namespace\", direction=\"inbound\"}",
+              "expr": "tcp_connection_duration_ms_bucket{deployment=\"$deployment\", namespace=~\"$namespace|$namespace-viz\", direction=\"inbound\"}",
               "format": "time_series",
               "intervalFactor": 1,
               "refId": "A"
@@ -918,7 +918,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus",
+      "datasource": "$datasource",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -1004,7 +1004,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus",
+      "datasource": "$datasource",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -1097,7 +1097,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus",
+      "datasource": "$datasource",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -1183,7 +1183,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus",
+      "datasource": "$datasource",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -1285,7 +1285,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus",
+      "datasource": "$datasource",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -1371,7 +1371,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus",
+      "datasource": "$datasource",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -1471,7 +1471,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus",
+      "datasource": "$datasource",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -1571,7 +1571,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus",
+      "datasource": "$datasource",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -1657,7 +1657,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus",
+      "datasource": "$datasource",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -1757,7 +1757,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus",
+      "datasource": "$datasource",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -1883,7 +1883,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus",
+      "datasource": "$datasource",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -1995,7 +1995,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus",
+      "datasource": "$datasource",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -2100,7 +2100,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "prometheus",
+      "datasource": "$datasource",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -2233,12 +2233,31 @@
   "templating": {
     "list": [
       {
+        "current": {
+          "selected": false,
+          "text": "default",
+          "value": "default"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "datasource",
+        "multi": false,
+        "name": "datasource",
+        "options": [],
+        "query": "prometheus",
+        "queryValue": "",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
         "allValue": ".*",
         "current": {
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "prometheus",
+        "datasource": "$datasource",
         "definition": "",
         "hide": 2,
         "includeAll": true,
@@ -2246,7 +2265,7 @@
         "multi": false,
         "name": "deployment",
         "options": [],
-        "query": "label_values(process_start_time_seconds{control_plane_component!=\"\"}, deployment)",
+        "query": "label_values(process_start_time_seconds{namespace=~\"$namespace|$namespace-viz\"}, deployment)",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -2263,7 +2282,7 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "prometheus",
+        "datasource": "$datasource",
         "definition": "",
         "hide": 2,
         "includeAll": true,
@@ -2285,7 +2304,7 @@
       {
         "allValue": ".*",
         "current": {},
-        "datasource": "prometheus",
+        "datasource": "$datasource",
         "definition": "",
         "hide": 0,
         "includeAll": false,
@@ -2294,6 +2313,28 @@
         "name": "namespace",
         "options": [],
         "query": "label_values(process_start_time_seconds{control_plane_ns!=\"\"},  control_plane_ns)",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": ".*",
+        "current": {},
+        "datasource": "$datasource",
+        "definition": "",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Linkerd Viz Namespace",
+        "multi": false,
+        "name": "namespace-viz",
+        "options": [],
+        "query": "label_values(process_start_time_seconds{control_plane_ns!=\"\",extension!=\"\"},  namespace)",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
