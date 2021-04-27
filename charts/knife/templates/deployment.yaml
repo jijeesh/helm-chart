@@ -12,12 +12,13 @@ spec:
     matchLabels:
       {{- include "knife.selectorLabels" . | nindent 6 }}
   template:
-    metadata:
-    {{- with .Values.podAnnotations }}
+    metadata:    
       annotations:
+    {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
         rollme: {{ randAlphaNum 5 | quote }}
-    {{- end }}        
+    {{- end }} 
+        checksum/config: {{ include (print $.Template.BasePath "/scripts-cm.yaml") . | sha256sum }}   
       labels:
         {{- include "knife.selectorLabels" . | nindent 8 }}
     spec:
@@ -49,10 +50,13 @@ spec:
               - /dev/null
             initialDelaySeconds: 5
             periodSeconds: 5
-          volumeMounts:
-            - name: conf-k6
-              mountPath: /k6.js
-              subPath: k6.js          
+          volumeMounts:  
+          {{ range $path, $bytes := .Files.Glob ( printf "scripts/**") }}
+          {{ $name := base $path }}
+            - name: cm-multi-file-volume
+              mountPath: {{ printf "/scripts/%s/%s" (index (regexSplit "scripts" (dir $path) -1) 1) $name | indent 2 }}
+              subPath: {{- sha256sum (printf "%s/%s" (index (regexSplit "scripts" (dir $path) -1) 1 ) $name ) | indent 2 }}
+          {{ end }}     
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -68,6 +72,6 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
-        - name: conf-k6
+        - name: cm-multi-file-volume
           configMap:
-            name: {{ include "knife.fullname" . }}-k6
+            name: {{ include "knife.fullname" . }}-scripts

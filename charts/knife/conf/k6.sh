@@ -1,1 +1,0 @@
-k6 run --vus 12 --duration 60s /k6.js
