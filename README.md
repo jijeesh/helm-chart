@@ -2,7 +2,8 @@
 # Lint the chart
 helm lint helm-chart-sources/*
 # Create the Helm chart package
-helm package charts/*
+cd all/
+helm package ../charts/knife
 
 # Create the Helm chart repository index
 helm repo index --url https://jijeesh.github.io/helm-chart/ .
