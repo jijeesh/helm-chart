@@ -1,3 +1,4 @@
+{{ if .Values.rbac.clusterrole.create }}
 ---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
@@ -6,9 +7,9 @@ metadata:
   labels:
 {{- include "knife.labels" . | nindent 4 }}
   annotations:
-    helm.sh/hook: post-install,post-upgrade,pre-delete
-    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
-    helm.sh/hook-weight: "-10"
+    # helm.sh/hook: post-install,post-upgrade,pre-delete
+    # helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+    # helm.sh/hook-weight: "-10"
 rules:
   - apiGroups:
       - ''
@@ -102,3 +103,4 @@ rules:
     verbs:
       - delete
       - list
+{{- end -}}

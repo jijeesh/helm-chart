@@ -3,7 +3,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: {{ include "knife.fullname" . }}
+  name: list-pods
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "knife.labels" . | nindent 4 }}

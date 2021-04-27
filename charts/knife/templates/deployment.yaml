@@ -49,6 +49,10 @@ spec:
               - /dev/null
             initialDelaySeconds: 5
             periodSeconds: 5
+          volumeMounts:
+            - name: conf-k6
+              mountPath: /k6.js
+              subPath: k6.js          
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -63,3 +67,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+        - name: conf-k6
+          configMap:
+            name: {{ include "knife.fullname" . }}-k6

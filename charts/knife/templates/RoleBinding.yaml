@@ -1,19 +1,16 @@
-{{ if .Values.rbac.clusterrole.create }}
+{{ if .Values.rbac.role.create }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: {{ include "knife.fullname" . }}
   labels:
 {{- include "knife.labels" . | nindent 4 }}
-  annotations:
-    # helm.sh/hook: post-install,post-upgrade,pre-delete
-    # helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
-    # helm.sh/hook-weight: "-10"
+  annotations:    
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: {{ include "knife.fullname" . }}
+  kind: Role
+  name: list-pods
   apiGroup: ""
 subjects:
 - kind: ServiceAccount
