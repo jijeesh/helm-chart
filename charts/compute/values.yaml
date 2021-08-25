@@ -28,6 +28,8 @@ podAnnotations: {}
 podSecurityContext: {}
   # fsGroup: 2000
 
+keda:
+  enabled: false
 securityContext: {}
   # capabilities:
   #   drop:
@@ -66,7 +68,7 @@ resources:
     memory: 128Mi
 
 autoscaling:
-  enabled: true
+  enabled: false
   minReplicas: 1
   maxReplicas: 5
   # targetCPUUtilizationPercentage: 60

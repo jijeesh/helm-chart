@@ -1,0 +1,197 @@
+Release "nginx" has been upgraded. Happy Helming!
+NAME: nginx
+LAST DEPLOYED: Tue Jun 22 19:07:05 2021
+NAMESPACE: testing
+STATUS: pending-upgrade
+REVISION: 5
+HOOKS:
+---
+# Source: nginx/templates/tests/test-connection.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "nginx-test-connection"
+  labels:
+    helm.sh/chart: nginx-2.0.0
+    app.kubernetes.io/name: nginx
+    app.kubernetes.io/instance: nginx
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['nginx:80']
+  restartPolicy: Never
+MANIFEST:
+---
+# Source: nginx/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nginx
+  labels:
+    helm.sh/chart: nginx-2.0.0
+    app.kubernetes.io/name: nginx
+    app.kubernetes.io/instance: nginx
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+---
+# Source: nginx/templates/auth-jwt-secret-pem.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: nginx-jwt-pem
+type: Opaque
+data:
+  rsa-public.pem: LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KK0Mwejg5dkZ4T3VVWnYxOVRKMENDc0FFTEhKbHd1NmIzUlU1Qkd3RXJsSXRBZ1orNVM4R2FweTl5S09mQ0hhZwp0eWNwRStFRUdlNmtMOThnVXc4QlRzS25EbSs5ajNWY0xZV2xFVEoydTNFMXl4OEdYV0E3VzBCSTJXalhxdVBrCjBMcFBaN3J1Tk1wQlJIUjgwbEplY3NYTGQxQ29yZGk1d1ZDWmhvVlZORXdZT05aa1Z6QythQytSa3ZuOUZpeWwKR1NEOTJCYmZjdkVlOEJROVEvVVY5N0llbE41bWhiSDJnMTI1bXpmKy9DSFBnWDJCa2dya3JQVDZOWVdUOElGVwpYd0lEQVFBQgotLS0tLUVORCBQVUJMSUMgS0VZLS0tLS0=
+---
+# Source: nginx/templates/auth-jwt-secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: nginx-jwt
+type: Opaque
+data:
+  rsa-public: TFMwdExTMUNSVWRKVGlCUVZVSk1TVU1nUzBWWkxTMHRMUzBLVFVsSlFrbHFRVTVDWjJ0eGFHdHBSemwzTUVKQlVVVkdRVUZQUTBGUgpPRUZOU1VsQ1EyZExRMEZSUlVGdk9GaE5TU3RuVjB4NFdtTTBiMDVpYjJKTlVBb3hUMWc1UlZoWVZsTTJPVXR0TlcxU1QzWkZTMDFDClIwcGlkMmRYTDBKS1RuRm5Xbk5YZGxSdU1VVTBhazUyWkd4cWFEVjJjbTFKU0ZsRFNGTjZNemhZQ2l0RE1IbzRPWFpHZUU5MVZWcDIKTVRsVVNqQkRRM05CUlV4SVNteDNkVFppTTFKVk5VSkhkMFZ5YkVsMFFXZGFLelZUT0VkaGNIazVlVXRQWmtOSVlXY0tkSGxqY0VVcgpSVVZIWlRaclREazRaMVYzT0VKVWMwdHVSRzByT1dvelZtTk1XVmRzUlZSS01uVXpSVEY1ZURoSFdGZEJOMWN3UWtreVYycFljWFZRCmF3b3dUSEJRV2pkeWRVNU5jRUpTU0ZJNE1HeEtaV056V0V4a01VTnZjbVJwTlhkV1ExcG9iMVpXVGtWM1dVOU9XbXRXZWtNcllVTXIKVW10MmJqbEdhWGxzQ2tkVFJEa3lRbUptWTNaRlpUaENVVGxSTDFWV09UZEpaV3hPTlcxb1lrZ3laekV5TlcxNlppc3ZRMGhRWjFneQpRbXRuY210eVVGUTJUbGxYVkRoSlJsY0tXSGRKUkVGUlFVSUtMUzB0TFMxRlRrUWdVRlZDVEVsRElFdEZXUzB0TFMwdAo=
+---
+# Source: nginx/templates/api-versions.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-api
+data:
+  apiVersions.txt: |
+    {{v1.19.11 1 19} [split.smi-spec.io/v1alpha1/TrafficSplit admissionregistration.k8s.io/v1 cert-manager.io/v1alpha3 networking.k8s.io/v1beta1/Ingress constraints.gatekeeper.sh/v1alpha1/K8sAzureContainerAllowedImages constraints.gatekeeper.sh/v1alpha1/K8sAzureServiceAllowedPorts cert-manager.io/v1alpha3/Certificate metrics.k8s.io/v1beta1/PodMetrics tap.linkerd.io/v1alpha1/Tap apiregistration.k8s.io/v1beta1 aadpodidentity.k8s.io/v1 apps/v1/Deployment storage.k8s.io/v1beta1/VolumeAttachment cert-manager.io/v1/Certificate acme.cert-manager.io/v1beta1 apps/v1/StatefulSet admissionregistration.k8s.io/v1beta1/ValidatingWebhookConfiguration constraints.gatekeeper.sh/v1alpha1/K8sAzureEnforceAppArmor constraints.gatekeeper.sh/v1alpha1/K8sAzureAllowedCapabilities coordination.k8s.io/v1/Lease cert-manager.io/v1alpha2/Issuer constraints.gatekeeper.sh/v1alpha1/K8sAzureBlockDefault cert-manager.io/v1alpha2 templates.gatekeeper.sh/v1beta1 networking.k8s.io/v1/NetworkPolicy policy/v1beta1/PodSecurityPolicy rbac.authorization.k8s.io/v1/ClusterRoleBinding monitoring.coreos.com/v1/PrometheusRule constraints.gatekeeper.sh/v1alpha1/K8sAzureDisallowedCapabilities acme.cert-manager.io/v1alpha2/Order apiregistration.k8s.io/v1/APIService storage.k8s.io/v1beta1/CSINode constraints.gatekeeper.sh/v1beta1/K8sAzureContainerAllowedPorts v1/ServiceProxyOptions autoscaling/v1/HorizontalPodAutoscaler certificates.k8s.io/v1beta1/CertificateSigningRequest constraints.gatekeeper.sh/v1beta1/K8sAzureServiceAllowedPorts coordination.k8s.io/v1beta1 v1/ReplicationController v1/Scale rbac.authorization.k8s.io/v1beta1/ClusterRole acme.cert-manager.io/v1beta1/Order monitoring.coreos.com/v1/Alertmanager monitoring.coreos.com/v1/ServiceMonitor extensions/v1beta1 cert-manager.io/v1/Issuer linkerd.io/v1alpha1/ServiceProfile acme.cert-manager.io/v1alpha3 linkerd.io/v1alpha1 templates.gatekeeper.sh/v1alpha1 v1/PodTemplate acme.cert-manager.io/v1beta1/Challenge autoscaling/v2beta1 apiextensions.k8s.io/v1beta1 acme.cert-manager.io/v1 scheduling.k8s.io/v1 v1/PodProxyOptions storage.k8s.io/v1beta1/StorageClass admissionregistration.k8s.io/v1/MutatingWebhookConfiguration cert-manager.io/v1beta1/ClusterIssuer rbac.authorization.k8s.io/v1/RoleBinding authorization.k8s.io/v1 certificates.k8s.io/v1 rbac.authorization.k8s.io/v1beta1 v1/PersistentVolumeClaim v1/Secret v1/Namespace v1/PersistentVolume acme.cert-manager.io/v1/Order keda.sh/v1alpha1/ScaledJob apps/v1 v1/Node authorization.k8s.io/v1beta1/LocalSubjectAccessReview aadpodidentity.k8s.io/v1/AzureAssignedIdentity policy/v1beta1 v1/Eviction v1/PodPortForwardOptions storage.k8s.io/v1/CSIDriver scheduling.k8s.io/v1/PriorityClass events.k8s.io/v1beta1 metrics.k8s.io/v1beta1 v1/Binding constraints.gatekeeper.sh/v1beta1/K8sAzureContainerNoPrivilege certificates.k8s.io/v1beta1 cert-manager.io/v1beta1 rbac.authorization.k8s.io/v1beta1/RoleBinding constraints.gatekeeper.sh/v1beta1/K8sAzureHostFilesystem constraints.gatekeeper.sh/v1alpha1/K8sAzureContainerNoPrivilegeEscalation external.metrics.k8s.io/v1beta1/ExternalMetricValueList status.gatekeeper.sh/v1beta1 v1/Event acme.cert-manager.io/v1/Challenge acme.cert-manager.io/v1alpha3/Challenge constraints.gatekeeper.sh/v1beta1/K8sAzureBlockHostNamespace constraints.gatekeeper.sh/v1beta1 linkerd.io/v1alpha2 constraints.gatekeeper.sh/v1beta1/K8sAzureBlockAutomountToken split.smi-spec.io/v1alpha2/TrafficSplit rbac.authorization.k8s.io/v1/Role monitoring.coreos.com/v1/Prometheus events.k8s.io/v1 authentication.k8s.io/v1 rbac.authorization.k8s.io/v1 node.k8s.io/v1beta1 apps/v1/DaemonSet networking.k8s.io/v1beta1 azmon.container.insights/v1/HealthState cert-manager.io/v1/ClusterIssuer cert-manager.io/v1beta1/Certificate v1/LimitRange scheduling.k8s.io/v1beta1/PriorityClass constraints.gatekeeper.sh/v1beta1/K8sAzureBlockDefault status.gatekeeper.sh/v1beta1/ConstraintTemplatePodStatus networking.k8s.io/v1beta1/IngressClass constraints.gatekeeper.sh/v1alpha1/K8sAzureAllowedUsersGroups autoscaling/v1 v1/Service apps/v1/ReplicaSet authorization.k8s.io/v1beta1/SelfSubjectAccessReview networking.k8s.io/v1/IngressClass config.gatekeeper.sh/v1alpha1 constraints.gatekeeper.sh/v1beta1/K8sAzureAllowedCapabilities templates.gatekeeper.sh/v1beta1/ConstraintTemplate v1/NodeProxyOptions authentication.k8s.io/v1/TokenReview constraints.gatekeeper.sh/v1beta1/K8sAzureHostNetworkingPorts constraints.gatekeeper.sh/v1beta1/K8sAzureContainerNoPrivilegeEscalation authorization.k8s.io/v1/SelfSubjectAccessReview admissionregistration.k8s.io/v1beta1/MutatingWebhookConfiguration coordination.k8s.io/v1beta1/Lease cert-manager.io/v1beta1/CertificateRequest cert-manager.io/v1alpha2/ClusterIssuer batch/v1beta1 v1/ConfigMap constraints.gatekeeper.sh/v1beta1/K8sAzureContainerAllowedImages rbac.authorization.k8s.io/v1/ClusterRole cert-manager.io/v1/CertificateRequest constraints.gatekeeper.sh/v1alpha1/K8sAzureContainerNoPrivilege v1/TokenRequest authorization.k8s.io/v1/SelfSubjectRulesReview admissionregistration.k8s.io/v1/ValidatingWebhookConfiguration apiextensions.k8s.io/v1/CustomResourceDefinition nats.io/v1alpha2/NatsServiceRole acme.cert-manager.io/v1alpha2 azmon.container.insights/v1 certificates.k8s.io/v1/CertificateSigningRequest apiextensions.k8s.io/v1beta1/CustomResourceDefinition constraints.gatekeeper.sh/v1alpha1/K8sAzureBlockHostNamespace storage.k8s.io/v1 monitoring.coreos.com/v1 v1/Pod events.k8s.io/v1/Event autoscaling/v2beta1/HorizontalPodAutoscaler v1 cert-manager.io/v1 storage.k8s.io/v1/VolumeAttachment constraints.gatekeeper.sh/v1beta1/K8sAzureEnforceAppArmor templates.gatekeeper.sh/v1alpha1/ConstraintTemplate batch/v1 scheduling.k8s.io/v1beta1 networking.k8s.io/v1 split.smi-spec.io/v1alpha2 v1/ServiceAccount cert-manager.io/v1alpha3/Issuer authorization.k8s.io/v1beta1 authorization.k8s.io/v1/SubjectAccessReview batch/v1beta1/CronJob storage.k8s.io/v1beta1 apps/v1/ControllerRevision rbac.authorization.k8s.io/v1beta1/Role constraints.gatekeeper.sh/v1alpha1/K8sAzureReadOnlyRootFilesystem constraints.gatekeeper.sh/v1alpha1/K8sAzureHostNetworkingPorts etcd.database.coreos.com/v1beta2/EtcdCluster keda.sh/v1alpha1 authentication.k8s.io/v1beta1/TokenReview batch/v1/Job storage.k8s.io/v1/CSINode aadpodidentity.k8s.io/v1/AzurePodIdentityException authentication.k8s.io/v1beta1 authorization.k8s.io/v1beta1/SubjectAccessReview constraints.gatekeeper.sh/v1beta1/K8sAzureAllowedUsersGroups constraints.gatekeeper.sh/v1beta1/K8sAzureContainerLimits storage.k8s.io/v1/StorageClass constraints.gatekeeper.sh/v1beta1/K8sAzureIngressHttpsOnly extensions/v1beta1/Ingress metrics.k8s.io/v1beta1/NodeMetrics authorization.k8s.io/v1/LocalSubjectAccessReview cert-manager.io/v1alpha2/CertificateRequest coordination.k8s.io/v1 autoscaling/v2beta2/HorizontalPodAutoscaler acme.cert-manager.io/v1alpha2/Challenge constraints.gatekeeper.sh/v1alpha1/K8sAzureContainerLimits status.gatekeeper.sh/v1beta1/ConstraintPodStatus node.k8s.io/v1beta1/RuntimeClass cert-manager.io/v1alpha3/CertificateRequest nats.io/v1alpha2 discovery.k8s.io/v1beta1/EndpointSlice events.k8s.io/v1beta1/Event constraints.gatekeeper.sh/v1beta1/K8sAzureDisallowedCapabilities v1/PodAttachOptions v1/ResourceQuota linkerd.io/v1alpha2/ServiceProfile admissionregistration.k8s.io/v1beta1 etcd.database.coreos.com/v1beta2 constraints.gatekeeper.sh/v1alpha1/K8sAzureContainerAllowedPorts keda.sh/v1alpha1/ScaledObject discovery.k8s.io/v1beta1 apps/v1/Scale constraints.gatekeeper.sh/v1alpha1/K8sAzureIngressHttpsOnly external.metrics.k8s.io/v1beta1 v1/PodExecOptions apiregistration.k8s.io/v1beta1/APIService cert-manager.io/v1alpha3/ClusterIssuer monitoring.coreos.com/v1/ThanosRuler constraints.gatekeeper.sh/v1alpha1 acme.cert-manager.io/v1alpha3/Order monitoring.coreos.com/v1/PodMonitor constraints.gatekeeper.sh/v1alpha1/K8sAzureBlockAutomountToken apiregistration.k8s.io/v1 tap.linkerd.io/v1alpha1 policy/v1beta1/PodDisruptionBudget rbac.authorization.k8s.io/v1beta1/ClusterRoleBinding config.gatekeeper.sh/v1alpha1/Config keda.sh/v1alpha1/TriggerAuthentication apiextensions.k8s.io/v1 v1/Endpoints networking.k8s.io/v1/Ingress aadpodidentity.k8s.io/v1/AzureIdentityBinding cert-manager.io/v1beta1/Issuer constraints.gatekeeper.sh/v1alpha1/K8sAzureHostFilesystem nats.io/v1alpha2/NatsCluster autoscaling/v2beta2 split.smi-spec.io/v1alpha1 authorization.k8s.io/v1beta1/SelfSubjectRulesReview storage.k8s.io/v1beta1/CSIDriver constraints.gatekeeper.sh/v1beta1/K8sAzureReadOnlyRootFilesystem v1/ComponentStatus aadpodidentity.k8s.io/v1/AzureIdentity cert-manager.io/v1alpha2/Certificate] {   }}
+---
+# Source: nginx/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  labels:
+    helm.sh/chart: nginx-2.0.0
+    app.kubernetes.io/name: nginx
+    app.kubernetes.io/instance: nginx
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: nginx
+    app.kubernetes.io/instance: nginx
+---
+# Source: nginx/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    helm.sh/chart: nginx-2.0.0
+    app.kubernetes.io/name: nginx
+    app.kubernetes.io/instance: nginx
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: nginx
+      app.kubernetes.io/instance: nginx
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: nginx
+        app.kubernetes.io/instance: nginx
+    spec:
+      serviceAccountName: nginx
+      securityContext:
+        {}
+      containers:
+        - name: nginx
+          securityContext:
+            {}
+          image: "nginx:1.16.0"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {}
+      volumes:
+      - name: public-key-volume
+        secret:
+          secretName: nginx-jwt
+          defaultMode: 256
+      - name: public-key-volume-pem
+        secret:
+          secretName: nginx-jwt-pem
+          defaultMode: 256
+---
+# Source: nginx/templates/keda.yaml
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: nginx
+spec:
+  scaleTargetRef:
+    name: nginx
+  pollingInterval: 1
+  cooldownPeriod:  1
+  minReplicaCount: 1
+  maxReplicaCount: 10
+  triggers:
+  - type: prometheus
+    metadata:
+      serverAddress: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
+      metricName: http_requests_total
+      threshold: '5'
+      query: sum(rate(request_total{deployment="nginx"}[10s]))
+  # - type: cpu
+  #   metadata:
+  #     # Required
+  #     type: Utilization # Value/ Utilization/ AverageValue
+  #     value: "60"
+  # - type: memory
+  #   metadata:
+  #     # Required
+  #     type: Utilization #Value/ Utilization/ AverageValue
+  #     value: "60"
+---
+# Source: nginx/templates/keda.yaml
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: nginx
+  labels:
+    helm.sh/chart: nginx-2.0.0
+    app.kubernetes.io/name: nginx
+    app.kubernetes.io/instance: nginx
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  podIdentity:
+      provider: azure
+
+NOTES:
+1. Get the application URL by running these commands:keda2
+  export POD_NAME=$(kubectl get pods --namespace testing -l "app.kubernetes.io/name=nginx,app.kubernetes.io/instance=nginx" -o jsonpath="{.items[0].metadata.name}")
+  echo "Visit http://127.0.0.1:8080 to use your application"
+  kubectl --namespace testing port-forward $POD_NAME 8080:80

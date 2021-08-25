@@ -1,20 +1,32 @@
-apiVersion: keda.k8s.io/v1alpha1
+{{- if template "keda" . -}}
+{{- $fullName := include "nginx.fullname" . -}}
+{{- $scaleTargetRef := include "keda.scaletargetrefname" . -}}
+apiVersion: {{ template "keda.version" . }}
 kind: ScaledObject
 metadata:
-  name: {{ include "nginx.fullname" . }}
-  labels:
-    deploymentName: {{ include "nginx.fullname" . }}
+  name: {{ $fullName }}
 spec:
   scaleTargetRef:
-    deploymentName: {{ include "nginx.fullname" . }}
-  pollingInterval: 15
-  cooldownPeriod:  30
+    {{ $scaleTargetRef }}: {{ $fullName }}
+  pollingInterval: 1
+  cooldownPeriod:  1
   minReplicaCount: 1
-  maxReplicaCount: 12
+  maxReplicaCount: 10
   triggers:
   - type: prometheus
     metadata:
       serverAddress: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
       metricName: http_requests_total
       threshold: '3'
-      query: sum(rate(request_total{deployment="nginx"}[30s]))
+      query: sum(rate(request_total{deployment="{{ $fullName }}"}[30s]))
+  # - type: cpu
+  #   metadata:
+  #     # Required
+  #     type: Utilization # Value/ Utilization/ AverageValue
+  #     value: "60"
+  # - type: memory
+  #   metadata:
+  #     # Required
+  #     type: Utilization #Value/ Utilization/ AverageValue
+  #     value: "60"
+{{- end -}}

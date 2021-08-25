@@ -1,9 +1,9 @@
-cat <<EOT > prometheus-datasource-values.yaml
+cat <<EOT > grafana-datasources-values.yaml
 grafana:
   additionalDataSources:
-    - name: prometheus
-      type: prometheus
-      url: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
+    - name: Loki
+      type: loki
+      url: http://loki:3100/
       access: proxy
-      isDefault: true
+      isDefault: false
 EOT

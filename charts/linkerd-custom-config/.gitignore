@@ -1,0 +1,7 @@
+certs/*
+test.sh
+env
+linkerd2/*
+linkerd-viz/*
+linkerd-jaeger/*
+test/*

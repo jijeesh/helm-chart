@@ -1,0 +1,30 @@
+{{- if .Values.keda.enabled -}}
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {{ include "compute.fullname" . }}
+spec:
+  scaleTargetRef:
+    name: {{ include "compute.fullname" . }}
+  pollingInterval: 15
+  cooldownPeriod:  30
+  minReplicaCount: 1
+  maxReplicaCount: 12
+  triggers:
+  - type: prometheus
+    metadata:
+      serverAddress: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
+      metricName: http_requests_total
+      threshold: '3'
+      query: sum(rate(request_total{deployment="compute"}[30s]))
+  # - type: cpu
+  #   metadata:
+  #     # Required
+  #     type: Utilization # Value/ Utilization/ AverageValue
+  #     value: "60"
+  # - type: memory
+  #   metadata:
+  #     # Required
+  #     type: Utilization #Value/ Utilization/ AverageValue
+  #     value: "60"
+ {{- end -}}

@@ -12,11 +12,12 @@ spec:
     matchLabels:
       {{- include "compute.selectorLabels" . | nindent 6 }}
   template:
-    metadata:
-    {{- with .Values.podAnnotations }}
+    metadata:    
       annotations:
+    {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
     {{- end }}
+        rollme: {{ randAlphaNum 5 | quote }}
       labels:
         {{- include "compute.selectorLabels" . | nindent 8 }}
     spec:

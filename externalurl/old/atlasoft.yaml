@@ -1,0 +1,33 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: imageviewer
+spec:
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ExternalName
+  externalName: cap-cst-dummy-plt-dev-api.azurewebsites.net
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: proxy-imageviewer-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    ingress.kubernetes.io/configuration-snippet: |
+      # we cannot pass Host header
+      set $best_http_host "";
+      proxy_set_header Host                   $best_http_host;
+spec:
+  rules:
+  - host: test-dummy-plt-dev.conduent-cap.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: imageviewer
+          servicePort: 80

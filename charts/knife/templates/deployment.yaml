@@ -15,9 +15,9 @@ spec:
     metadata:    
       annotations:
     {{- with .Values.podAnnotations }}
-        {{- toYaml . | nindent 8 }}
-        rollme: {{ randAlphaNum 5 | quote }}
+        {{- toYaml . | nindent 8 }}        
     {{- end }} 
+        rollme: {{ randAlphaNum 5 | quote }}
         checksum/config: {{ include (print $.Template.BasePath "/scripts-cm.yaml") . | sha256sum }}   
       labels:
         {{- include "knife.selectorLabels" . | nindent 8 }}
@@ -56,7 +56,17 @@ spec:
             - name: cm-multi-file-volume
               mountPath: {{ printf "/scripts/%s/%s" (index (regexSplit "scripts" (dir $path) -1) 1) $name | indent 2 }}
               subPath: {{- sha256sum (printf "%s/%s" (index (regexSplit "scripts" (dir $path) -1) 1 ) $name ) | indent 2 }}
-          {{ end }}     
+              readOnly: false
+          {{ end }}         
+          {{ range $path, $bytes := .Files.Glob ( printf "scripts/**") }}
+          {{ $name := base $path }}
+            - name: secrets-multi-file-volume
+              mountPath: {{ printf "/scripts2/%s/%s" (index (regexSplit "scripts" (dir $path) -1) 1) $name | indent 2 }}
+              subPath: {{- sha256sum (printf "%s/%s" (index (regexSplit "scripts" (dir $path) -1) 1 ) $name ) | indent 2 }}
+              readOnly: false
+          {{ end }}  
+            - name: emptydir-volume
+              mountPath: /emptydir
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -75,3 +85,10 @@ spec:
         - name: cm-multi-file-volume
           configMap:
             name: {{ include "knife.fullname" . }}-scripts
+            defaultMode: 0777
+        - name: secrets-multi-file-volume
+          secret:
+            secretName: {{ include "knife.fullname" . }}-scripts
+            defaultMode: 0777
+        - name: emptydir-volume
+          emptyDir: {}

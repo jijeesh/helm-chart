@@ -1,0 +1,35 @@
+USER-SUPPLIED VALUES:
+grafana:
+  admin:
+    existingSecret: prometheus-grafana-secret
+    passwordKey: admin-password
+    userKey: admin-user
+  deploymentStrategy:
+    type: Recreate
+  grafana.ini:
+    auth.azuread:
+      allow_sign_up: true
+      allowed_groups: 8f8dce3a-65f3-4d0a-aad8-5bbb40729b79 2a4062d9-4c43-4a7a-80ba-9460ffee8c8e
+      auth_url: https://login.microsoftonline.com/86a9296c-fff4-4989-8eb5-e17561dc6359/oauth2/v2.0/authorize
+      client_id: 37329ac8-3b2e-4376-9595-c232ad02e674
+      client_secret: 4a53ea85-3824-4df8-a1f8-ed1e5106120a
+      enabled: true
+      name: Azure AD
+      scopes: openid email profile
+      token_url: https://login.microsoftonline.com/86a9296c-fff4-4989-8eb5-e17561dc6359/oauth2/v2.0/token
+    server:
+      root_url: https://grafana-dummy-plt-dev.conduent-cap.com
+  persistence:
+    enabled: true
+    size: 5Gi
+    storageClass: managed-premium
+prometheus:
+  prometheusSpec:
+    podMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorSelectorNilUsesHelmValues: false
+prometheusOperator:
+  createCustomResource: false
+prometheusSpec:
+  retention: 15d
+  retentionSize: 8GiB
+  scrapeInterv: 30s

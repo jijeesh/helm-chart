@@ -1,0 +1,13 @@
+prometheus:
+  prometheusSpec:
+    retention: 15d
+    retentionSize: 8GiB
+    scrapeInterv: 30s
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: default
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 10Gi

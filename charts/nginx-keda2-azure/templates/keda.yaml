@@ -1,0 +1,33 @@
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: {{ include "nginx.fullname" . }}
+spec:
+  podIdentity:
+      provider: azure
+---
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {{ include "nginx.fullname" . }}
+spec:
+  scaleTargetRef:
+    name: {{ include "nginx.fullname" . }}
+  minReplicaCount: 1
+  maxReplicaCount: 10
+  triggers:
+  - type: azure-monitor
+    metadata:
+      resourceURI: Microsoft.ContainerService/managedClusters/azureMonitorCluster
+      tenantId: 86a9296c-fff4-4989-8eb5-e17561dc6359
+      subscriptionId: 10a3bdff-ea37-4b09-a12b-97fdf992da3f
+      resourceGroupName: azureMonitor
+      metricName: kube_pod_status_ready
+      metricFilter: namespace eq 'testing'
+      metricAggregationInterval: "0:1:0"
+      metricAggregationType: Average
+      targetValue: "1"
+    authenticationRef:
+      name: {{ include "nginx.fullname" . }}

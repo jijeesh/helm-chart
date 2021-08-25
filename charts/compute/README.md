@@ -10,10 +10,10 @@ http://jwt-validation-server.ingress-space.svc.cluster.local/validate
 
 ab -n 1000 -c 1000 http://jwt-validation-server.ingress-space.svc.cluster.local/
 
-curl -H 'Authorization: Token eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik16YzBNVVV6UXpkRVJUZzRNekV5TnpFME1Ea3hPRGRCUlVSRlFUUkZNems1TlRrME9VUkJSQSJ9.eyJodHRwOi8vd3d3LmNhcC1mZWF0LmNvbS8iOltdLCJodHRwOi8vd3d3LmNhcC1lbWFpbC5jb20vIjoiY2FwdGVzdHVzZXIwMTFAZ21haWwuY29tIiwiaXNzIjoiaHR0cHM6Ly9leHRlbnNpb25zY2xvdWQuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVlZmRlOWFhYWVkYjM3MDAxMzc5NGQ0ZSIsImF1ZCI6WyJodHRwczovL2xvZ2ljYWwtY2FwLWNvcmUuY29uZHVlbnQtY2FwLmNvbSIsImh0dHBzOi8vZXh0ZW5zaW9uc2Nsb3VkLmF1dGgwLmNvbS91c2VyaW5mbyJdLCJpYXQiOjE2MDc2MTkwODMsImV4cCI6MTYwNzcwNTQ4MywiYXpwIjoiQ3JWYUxuQUNZTHpTWUVkd1RIMEthdlNpSEhpU012N2IiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIGFkZHJlc3MgcGhvbmUiLCJndHkiOiJwYXNzd29yZCJ9.LrumnHtWXJN9uyra90gJuLCrnCgTj1nZn0mw6raH1B2rJOb9sWP7mXLBLkdKI5OBgdaoIXjrljbPkPWdfzBYKnu8eh6YlnLAzuT50RYmiDuWjBq3QgoyLaO4Sjikqxkmg_b7DVT6LSeI1VM0XCilJ0l4OWVoLlDbBHHeN__HG9aMtyrcVzocIa13S_f0ZQVFbaXVuo0N7E-P9G7HolzDi0AnWSki7PRa8lgdRtUsvuArWuLnv7U1uKJEUkWJMkOq6Q3kKWv4WhwOZYbf1jlGZZG4HyRKsscC1XRJKUO0inwcD9-xROpU2I5kpazKzzU6L__gBil2vBfWlUyt8qlHiQ' http://jwt-validation-server.ingress-space.svc.cluster.local/validate
+curl -H 'Authorization: Token dddddddddddddddddddddddd' http://jwt-validation-server.ingress-space.svc.cluster.local/validate
 
 
-ab -H 'Authorization: Token eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik16YzBNVVV6UXpkRVJUZzRNekV5TnpFME1Ea3hPRGRCUlVSRlFUUkZNems1TlRrME9VUkJSQSJ9.eyJodHRwOi8vd3d3LmNhcC1mZWF0LmNvbS8iOltdLCJodHRwOi8vd3d3LmNhcC1lbWFpbC5jb20vIjoiY2FwdGVzdHVzZXIwMTFAZ21haWwuY29tIiwiaXNzIjoiaHR0cHM6Ly9leHRlbnNpb25zY2xvdWQuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVlZmRlOWFhYWVkYjM3MDAxMzc5NGQ0ZSIsImF1ZCI6WyJodHRwczovL2xvZ2ljYWwtY2FwLWNvcmUuY29uZHVlbnQtY2FwLmNvbSIsImh0dHBzOi8vZXh0ZW5zaW9uc2Nsb3VkLmF1dGgwLmNvbS91c2VyaW5mbyJdLCJpYXQiOjE2MDc2MTkwODMsImV4cCI6MTYwNzcwNTQ4MywiYXpwIjoiQ3JWYUxuQUNZTHpTWUVkd1RIMEthdlNpSEhpU012N2IiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIGFkZHJlc3MgcGhvbmUiLCJndHkiOiJwYXNzd29yZCJ9.LrumnHtWXJN9uyra90gJuLCrnCgTj1nZn0mw6raH1B2rJOb9sWP7mXLBLkdKI5OBgdaoIXjrljbPkPWdfzBYKnu8eh6YlnLAzuT50RYmiDuWjBq3QgoyLaO4Sjikqxkmg_b7DVT6LSeI1VM0XCilJ0l4OWVoLlDbBHHeN__HG9aMtyrcVzocIa13S_f0ZQVFbaXVuo0N7E-P9G7HolzDi0AnWSki7PRa8lgdRtUsvuArWuLnv7U1uKJEUkWJMkOq6Q3kKWv4WhwOZYbf1jlGZZG4HyRKsscC1XRJKUO0inwcD9-xROpU2I5kpazKzzU6L__gBil2vBfWlUyt8qlHiQ' -n 1000 -c 1000 http://jwt-validation-server.ingress-space.svc.cluster.local/validate
+ab -H 'Authorization: Token aaaaaaaaaaaaaaaaaaaaaaaa' -n 1000 -c 1000 http://jwt-validation-server.ingress-space.svc.cluster.local/validate
 
 
 ab -n 100 -c 10 http://web-service/
@@ -28,6 +28,28 @@ curl --data "millicores=400&durationSec=300" compute:8080/ConsumeCPU
 # curl --data "megabytes=400&durationSec=300" compute:8080/ConsumeMem
 
 curl --data "megabytes=400&durationSec=300" compute:8080/ConsumeMem
+
+```
+cat <<EOT > compute.js
+import http from 'k6/http';
+import { sleep } from 'k6';
+const url = 'http://compute:8080/ConsumeCPU';
+export default function () {
+  let data = 'millicores=200&durationSec=200'
+  http.post(url, data);
+  sleep(1);
+}
+EOT
+
+```
+````
+k6 run --vus 12 --duration 60s compute.js
+
+````
+
+
+
+
 
 rate(container_cpu_usage_seconds_total{ image!="", pod=~"compute-.*", container!="POD", container=~"compute-.*" }[5m])
 # container usage

@@ -1,0 +1,40 @@
+{{- $fullName := include "nginx.fullname" . -}}
+{{- $scaleTargetRef := include "keda.scaletargetrefname" . -}}
+apiVersion: {{ template "keda.version" . }}
+kind: TriggerAuthentication
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "nginx.labels" . | nindent 4 }}
+spec:
+  podIdentity:
+      provider: azure
+---
+apiVersion: {{ template "keda.version" . }}
+kind: ScaledObject
+metadata:
+  name: {{ $fullName }}
+spec:
+  scaleTargetRef:
+    {{ $scaleTargetRef }}: {{ $fullName }}
+  pollingInterval: 1
+  cooldownPeriod:  1
+  minReplicaCount: 1
+  maxReplicaCount: 10
+  triggers:
+  - type: prometheus
+    metadata:
+      serverAddress: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
+      metricName: http_requests_total
+      threshold: '5'
+      query: sum(rate(request_total{deployment="{{ $fullName }}"}[10s]))
+  # - type: cpu
+  #   metadata:
+  #     # Required
+  #     type: Utilization # Value/ Utilization/ AverageValue
+  #     value: "60"
+  # - type: memory
+  #   metadata:
+  #     # Required
+  #     type: Utilization #Value/ Utilization/ AverageValue
+  #     value: "60"
